@@ -1,0 +1,14 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Python cache
+__pycache__/
+*.pyc
+# IDE - IntelliJ/WebStorm/PyCharm
+.idea/
+# Virtual environments
+.venv/
+
+.ipynb_checkpoints/
