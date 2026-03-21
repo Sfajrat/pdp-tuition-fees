@@ -1,44 +1,77 @@
 from PyQt5.QtWidgets import (
-    QWidget, QPushButton, QLabel, QLineEdit,
-    QVBoxLayout, QComboBox
+    QWidget,
+    QPushButton,
+    QLineEdit,
+    QLabel,
+    QVBoxLayout,
+    QHBoxLayout,
+    QGroupBox
 )
 
+
 class Ui_MainWindow:
+
     def setupUi(self, MainWindow):
-        MainWindow.setWindowTitle("Прогноз стоимости обучения")
 
-        # Поле ввода года
-        self.inputYear = QLineEdit()
-        self.inputYear.setPlaceholderText("Введите год (например, 2026)")
+        MainWindow.setWindowTitle("Система анализа стоимости образовательных программ")
+        MainWindow.resize(400, 400)
 
-        # Выбор программы
-        self.comboProgram = QComboBox()
-        self.comboProgram.addItems([
-            "Экономика",
-            "Менеджмент",
-            "Программная инженерия",
-            "Юриспруденция",
-            "Психология",
-            "ГМУ"
-        ])
+        self.centralwidget = QWidget()
 
-        # Кнопки
+        # Заголовок
+        self.titleLabel = QLabel("Анализ стоимости обучения")
+        self.titleLabel.setStyleSheet("font-size:18px; font-weight:bold;")
+
+        # Кнопки работы с данными
         self.btnLoad = QPushButton("Загрузить данные")
+        self.btnPlot = QPushButton("Построить график")
+
+        # Блок ввода параметров
+        self.groupPrediction = QGroupBox("Параметры прогнозирования")
+
+        self.inputYear = QLineEdit()
+        self.inputYear.setPlaceholderText("Год")
+
+        self.inputLength = QLineEdit()
+        self.inputLength.setPlaceholderText("Длительность программы")
+
+        self.inputStudents = QLineEdit()
+        self.inputStudents.setPlaceholderText("Количество студентов")
+
         self.btnPredict = QPushButton("Сделать прогноз")
-        self.btnPlot = QPushButton("Показать график")
 
-        # Результат
-        self.labelResult = QLabel("Прогноз: —")
+        self.labelResult = QLabel("Прогноз: ")
 
-        # Layout
+        predictionLayout = QVBoxLayout()
+
+        predictionLayout.addWidget(QLabel("Год"))
+        predictionLayout.addWidget(self.inputYear)
+
+        predictionLayout.addWidget(QLabel("Длительность программы"))
+        predictionLayout.addWidget(self.inputLength)
+
+        predictionLayout.addWidget(QLabel("Количество студентов"))
+        predictionLayout.addWidget(self.inputStudents)
+
+        predictionLayout.addWidget(self.btnPredict)
+        predictionLayout.addWidget(self.labelResult)
+
+        self.groupPrediction.setLayout(predictionLayout)
+
+        # Кнопка генерации отчета
+        self.btnReport = QPushButton("Сформировать аналитический отчет")
+
+        # Главный layout
         layout = QVBoxLayout()
-        layout.addWidget(self.inputYear)
-        layout.addWidget(self.comboProgram)
+
+        layout.addWidget(self.titleLabel)
         layout.addWidget(self.btnLoad)
-        layout.addWidget(self.btnPredict)
-        layout.addWidget(self.labelResult)
         layout.addWidget(self.btnPlot)
 
-        central = QWidget()
-        central.setLayout(layout)
-        MainWindow.setCentralWidget(central)
+        layout.addWidget(self.groupPrediction)
+
+        layout.addWidget(self.btnReport)
+
+        self.centralwidget.setLayout(layout)
+
+        MainWindow.setCentralWidget(self.centralwidget)
