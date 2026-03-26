@@ -3,11 +3,12 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 from ui_mainwindow import Ui_MainWindow
 from data_loader import load_file
 from preprocessing import prepare_data
-from ml_module import load_model, predict_price
+from ml_module import ModelManager
 from visualization import plot_price_dynamics
 from database import Database
 from report_generator import generate_report
 from export_module import export_report
+from comparative_analysis import ComparativeAnalysis
 
 class App(QMainWindow):
 
