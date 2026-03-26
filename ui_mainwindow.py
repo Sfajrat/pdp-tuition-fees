@@ -1,6 +1,15 @@
 from PyQt5.QtWidgets import (
-    QWidget, QPushButton, QLineEdit, QLabel, QVBoxLayout, QHBoxLayout,
-    QGroupBox, QComboBox, QTableWidget, QTableWidgetItem, QHeaderView,
+    QWidget, 
+    QPushButton, 
+    QLineEdit, 
+    QLabel, 
+    QVBoxLayout, 
+    QHBoxLayout,
+    QGroupBox, 
+    QComboBox, 
+    QTableWidget, 
+    QTableWidgetItem, 
+    QHeaderView,
     QScrollArea
 )
 
@@ -10,7 +19,7 @@ class Ui_MainWindow:
     def setupUi(self, MainWindow):
 
         MainWindow.setWindowTitle("Система анализа стоимости образовательных программ")
-        MainWindow.resize(400, 400)
+        MainWindow.resize(1000, 700)
 
         self.centralwidget = QWidget()
 
