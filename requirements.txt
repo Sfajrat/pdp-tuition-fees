@@ -1,4 +1,9 @@
-seaborn
+pandas
+numpy
 scikit-learn
 matplotlib
-pandas
+pyqt5
+joblib
+openpyxl
+scipy
+reportlab
