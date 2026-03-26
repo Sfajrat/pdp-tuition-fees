@@ -14,11 +14,10 @@ class App(QMainWindow):
 
     def __init__(self):
         super().__init__()
-
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-
         self.db = Database("tuition.db")
+        self.model_manager = ModelManager()
 
         try:
             self.model = load_model("model.pkl")
@@ -28,12 +27,11 @@ class App(QMainWindow):
 
         # подключение кнопок интерфейса
         self.ui.btnLoad.clicked.connect(self.load_data)
+        self.ui.btnTrainModels.clicked.connect(self.train_models)
         self.ui.btnPredict.clicked.connect(self.make_prediction)
         self.ui.btnPlot.clicked.connect(self.show_plot)
-
-        # если есть кнопка отчёта
-        if hasattr(self.ui, "btnReport"):
-            self.ui.btnReport.clicked.connect(self.create_report)
+        self.ui.btnCompare.clicked.connect(self.compare_analysis)
+        self.ui.btnReport.clicked.connect(self.create_report)
 
     # загрузка данных
     def load_data(self):
