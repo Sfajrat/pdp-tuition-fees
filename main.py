@@ -55,10 +55,31 @@ class App(QMainWindow):
 
             self.db.save_dataframe(df)
 
-            QMessageBox.information(self, "Успех", "Данные успешно загружены")
+            QMessageBox.information(self, "Успех", f"Загружено {len(df)} записей")
 
         except Exception as e:
             QMessageBox.critical(self, "Ошибка загрузки", str(e))
+
+    #обучение моделей
+    def train_models(self):
+        try:
+            df = self.db.load_all()
+            if df.empty:
+                QMessageBox.warning(self, "Ошибка", "Сначала загрузите данные")
+                return
+
+            X = df[["year", "program_length", "students_count"]]
+            y = df["price"]
+
+            self.model_manager = ModelManager()
+
+            for name in ["linear", "random_forest", "gradient_boosting"]:
+                self.model_manager.train_model(name, X, y, save_path=f"{name}_model.pkl")
+
+            QMessageBox.information(self, "Успех", "Все три модели успешно обучены и сохранены!")
+
+        except Exception as e:
+            QMessageBox.critical(self, "Ошибка обучения", str(e))
 
     # прогнозирование
     def make_prediction(self):
