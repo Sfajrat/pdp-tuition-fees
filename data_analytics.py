@@ -1,28 +1,27 @@
-import numpy as np
+import pandas as pd
 
-def mean_price(df):
-    return float(np.mean(df["price"]))
+def calculate_average_price(df):
+    return df["price"].mean()
 
+def calculate_max_price(df):
+    return df["price"].max()
 
-def median_price(df):
-    return float(np.median(df["price"]))
+def calculate_min_price(df):
+    return df["price"].min()
 
+def calculate_growth_rate(df):
+    df = df.sort_values("year")
+    prices = df["price"].values
+    if len(prices) < 2:
+        return 0
+    growth = ((prices[-1] - prices[0]) / prices[0]) * 100
+    return growth
 
-def std_price(df):
-    return float(np.std(df["price"]))
-
-
-def variance_price(df):
-    return float(np.var(df["price"]))
-
-
-def describe_statistics(df):
-
-    stats = {
-        "mean": mean_price(df),
-        "median": median_price(df),
-        "std": std_price(df),
-        "variance": variance_price(df)
+def analyze_dataset(df):
+    return {
+        "avg_price": calculate_average_price(df),
+        "max_price": calculate_max_price(df),
+        "min_price": calculate_min_price(df),
+        "growth_rate": calculate_growth_rate(df)
     }
-
-    return stats
+    
