@@ -11,6 +11,7 @@ class Database:
                 year INTEGER,
                 program TEXT,
                 program_length INTEGER,
+                form TEXT,
                 students_count INTEGER,
                 price REAL,
                 university TEXT
