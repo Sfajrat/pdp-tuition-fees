@@ -1,11 +1,7 @@
 from PyQt5.QtWidgets import (
-    QWidget,
-    QPushButton,
-    QLineEdit,
-    QLabel,
-    QVBoxLayout,
-    QHBoxLayout,
-    QGroupBox
+    QWidget, QPushButton, QLineEdit, QLabel, QVBoxLayout, QHBoxLayout,
+    QGroupBox, QComboBox, QTableWidget, QTableWidgetItem, QHeaderView,
+    QScrollArea
 )
 
 
@@ -22,56 +18,70 @@ class Ui_MainWindow:
         self.titleLabel = QLabel("Анализ стоимости обучения")
         self.titleLabel.setStyleSheet("font-size:18px; font-weight:bold;")
 
-        # Кнопки работы с данными
+        # Кнопки
         self.btnLoad = QPushButton("Загрузить данные")
+        self.btnTrainModels = QPushButton("Обучить модели заново")
         self.btnPlot = QPushButton("Построить график")
+        self.btnCompare = QPushButton("Сравнить модели / анализ")
+        self.btnReport = QPushButton("Сформировать аналитический отчет")
 
-        # Блок ввода параметров
-        self.groupPrediction = QGroupBox("Параметры прогнозирования")
+        # Таблица для отображения данных
+        self.dataTable = QTableWidget()
+        self.dataTable.setColumnCount(6)
+        self.dataTable.setHorizontalHeaderLabels([
+            "Год", "Программа", "Длительность", "Студентов", "Стоимость (руб.)", "Вуз"
+        ])
+        self.dataTable.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.dataTable.setAlternatingRowColors(True)
 
-        self.inputYear = QLineEdit()
+        # Блок прогнозирования
+        self.groupPrediction = QGroupBox("Прогнозирование")
+
+        self.modelCombo = QComboBox()
+        self.modelCombo.addItems(["linear", "random_forest", "gradient_boosting"])
+
+        self.inputYear = QLineEdit();     
         self.inputYear.setPlaceholderText("Год")
-
-        self.inputLength = QLineEdit()
+        self.inputLength = QLineEdit();   
         self.inputLength.setPlaceholderText("Длительность программы")
-
-        self.inputStudents = QLineEdit()
+        self.inputStudents = QLineEdit(); 
         self.inputStudents.setPlaceholderText("Количество студентов")
 
         self.btnPredict = QPushButton("Сделать прогноз")
-
         self.labelResult = QLabel("Прогноз: ")
 
-        predictionLayout = QVBoxLayout()
-
-        predictionLayout.addWidget(QLabel("Год"))
-        predictionLayout.addWidget(self.inputYear)
-
-        predictionLayout.addWidget(QLabel("Длительность программы"))
-        predictionLayout.addWidget(self.inputLength)
-
-        predictionLayout.addWidget(QLabel("Количество студентов"))
-        predictionLayout.addWidget(self.inputStudents)
-
-        predictionLayout.addWidget(self.btnPredict)
-        predictionLayout.addWidget(self.labelResult)
-
-        self.groupPrediction.setLayout(predictionLayout)
-
-        # Кнопка генерации отчета
-        self.btnReport = QPushButton("Сформировать аналитический отчет")
+        predLayout = QVBoxLayout()
+        predLayout.addWidget(QLabel("Модель:"))
+        predLayout.addWidget(self.modelCombo)
+        predLayout.addWidget(QLabel("Год"));           
+        predLayout.addWidget(self.inputYear)
+        predLayout.addWidget(QLabel("Длительность"));  
+        predLayout.addWidget(self.inputLength)
+        predLayout.addWidget(QLabel("Студентов"));     
+        predLayout.addWidget(self.inputStudents)
+        predLayout.addWidget(self.btnPredict)
+        predLayout.addWidget(self.labelResult)
+        self.groupPrediction.setLayout(predLayout)
 
         # Главный layout
-        layout = QVBoxLayout()
+        mainLayout = QVBoxLayout()
+        mainLayout.addWidget(self.titleLabel)
 
-        layout.addWidget(self.titleLabel)
-        layout.addWidget(self.btnLoad)
-        layout.addWidget(self.btnPlot)
+        # Кнопки в одну строку
+        btnLayout = QHBoxLayout()
+        btnLayout.addWidget(self.btnLoad)
+        btnLayout.addWidget(self.btnTrainModels)
+        btnLayout.addWidget(self.btnPlot)
+        btnLayout.addWidget(self.btnCompare)
+        btnLayout.addWidget(self.btnReport)
+        mainLayout.addLayout(btnLayout)
 
-        layout.addWidget(self.groupPrediction)
+        # Таблица данных
+        mainLayout.addWidget(QLabel("Загруженные данные:"))
+        mainLayout.addWidget(self.dataTable, stretch=1)   # растягиваем таблицу
 
-        layout.addWidget(self.btnReport)
+        # Блок прогнозирования
+        mainLayout.addWidget(self.groupPrediction)
 
-        self.centralwidget.setLayout(layout)
-
+        self.centralwidget.setLayout(mainLayout)
         MainWindow.setCentralWidget(self.centralwidget)
