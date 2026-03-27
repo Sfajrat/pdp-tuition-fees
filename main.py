@@ -58,8 +58,29 @@ class App(QMainWindow):
 
             QMessageBox.information(self, "Успех", f"Загружено {len(df)} записей")
 
+            self.refresh_table()
+            
         except Exception as e:
             QMessageBox.critical(self, "Ошибка загрузки", str(e))
+            
+    # Обновление таблицы
+    def refresh_table(self):
+        try:
+            df = self.db.load_all()
+            if df.empty:
+                return
+
+            self.ui.dataTable.setRowCount(len(df))
+
+            for i, row in df.iterrows():
+                self.ui.dataTable.setItem(i, 0, QTableWidgetItem(str(row.get('year', ''))))
+                self.ui.dataTable.setItem(i, 1, QTableWidgetItem(str(row.get('program', ''))))
+                self.ui.dataTable.setItem(i, 2, QTableWidgetItem(str(row.get('program_length', ''))))
+                self.ui.dataTable.setItem(i, 3, QTableWidgetItem(str(row.get('students_count', ''))))
+                self.ui.dataTable.setItem(i, 4, QTableWidgetItem(f"{row.get('price', 0):,.0f}"))
+                self.ui.dataTable.setItem(i, 5, QTableWidgetItem(str(row.get('university', 'Не указан'))))
+        except:
+            pass
 
     #обучение моделей
     def train_models(self):
