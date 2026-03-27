@@ -40,5 +40,28 @@ def generate_report(df):
     report.append(f"Дисперсия:                            {stats['variance']:,.0f}")
     report.append("")
 
+    # 3. Сравнительный анализ
+    report.append("3. СРАВНИТЕЛЬНЫЙ АНАЛИЗ")
+    report.append("-" * 65)
+
+    report.append("\n3.1 Средняя стоимость обучения по вузам:")
+    report.append(comp_data["by_university"].to_string(float_format="{:,.2f}".format))
+
+    report.append("\n\n3.2 Средняя стоимость обучения по программам:")
+    report.append(comp_data["by_program"].to_string(float_format="{:,.2f}".format))
+
+    report.append("\n\n3.3 ТОП-7 самых дорогих направлений подготовки:")
+    top_exp = comp_data["top_expensive"].head(7)
+    report.append(top_exp.to_string(index=False, float_format="{:,.2f}".format))
+
+    report.append("\n\n3.4 Темп роста стоимости по программам:")
+    growth_df = comp_data["growth"].copy()
+    # Переименовываем только нужные колонки для отчёта
+    growth_df = growth_df.rename(columns={
+        'program': 'Программа',
+        'growth_percent': 'Темп роста (%)',
+        'first_year': 'Первый год',
+        'last_year': 'Последний год'
+    })
 
     return "\n".join(report)
