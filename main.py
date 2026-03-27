@@ -133,6 +133,20 @@ class App(QMainWindow):
         except Exception as e:
             QMessageBox.critical(self, "Ошибка графика", str(e))
 
+    # создание сравнительного анализа 
+    def compare_analysis(self):
+        try:
+            df = self.db.load_all()
+            if df.empty:
+                QMessageBox.warning(self, "Ошибка", "Нет данных")
+                return
+            comp = ComparativeAnalysis(df)
+            print("\n=== СРАВНИТЕЛЬНЫЙ АНАЛИЗ ===")
+            print(comp.get_report_dict())
+            QMessageBox.information(self, "Анализ", "Подробные результаты выведены в консоль")
+        except Exception as e:
+            QMessageBox.critical(self, "Ошибка", str(e))
+
     # создание аналитического отчёта
     def create_report(self):
         try:
