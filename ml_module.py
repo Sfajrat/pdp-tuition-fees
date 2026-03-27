@@ -8,10 +8,7 @@ class ModelManager:
     def __init__(self):
         self.models = {}
         self.scaler = None
-        self.feature_names = ['year', 'program_length', 'students_count']  # только эти 3 признака
-
-    MODEL_PATH = "model.pkl"
-
+        self.feature_names = ['year', 'program_length', 'students_count']  # только эти 3 признака, в будущем планриуется добавить формат обечения
 
     def load_model(self, model_name, path=None):
         # Загружает модель, если она существует. Если файла нет — обучает модель автоматически.
