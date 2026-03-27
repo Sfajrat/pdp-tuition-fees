@@ -1,6 +1,7 @@
 from datetime import datetime
 from data_analytics import analyze_dataset
-from statistics import describe_statistics
+from statistics_module import describe_statistics
+from comparative_analysis import ComparativeAnalysis
 
 
 def generate_report(df):
