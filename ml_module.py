@@ -13,19 +13,14 @@ class ModelManager:
     MODEL_PATH = "model.pkl"
 
 
-    def load_model(path=MODEL_PATH):
-        """
-        Загружает модель, если она существует.
-        Если файла нет — обучает модель автоматически.
-        """
-        if not os.path.exists(path):
-            print("⚠ model.pkl не найден — выполняю обучение модели...")
-            model = train_default_model()
-            joblib.dump(model, path)
-            print("✔ Модель обучена и сохранена.")
-            return model
-
-        return joblib.load(path)
+    def load_model(self, model_name, path=None):
+        # Загружает модель, если она существует. Если файла нет — обучает модель автоматически.
+        if path is None:
+            path = f"{model_name}_model.pkl"
+        data = joblib.load(path)
+        self.models[model_name] = data
+        self.scaler = data["scaler"]
+        return data["model"]
 
 
     def train_default_model():
