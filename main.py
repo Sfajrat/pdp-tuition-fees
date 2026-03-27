@@ -19,11 +19,12 @@ class App(QMainWindow):
         self.db = Database("tuition.db")
         self.model_manager = ModelManager()
 
-        try:
-            self.model = load_model("model.pkl")
-        except Exception:
-            self.model = None
-            QMessageBox.warning(self, "Ошибка", "Файл модели model.pkl не найден")
+        # Загрузка моделей при старте
+        for name in ["linear", "random_forest", "gradient_boosting"]:
+            try:
+                self.model_manager.load_model(name)
+            except Exception:
+                QMessageBox.warning(self, "Ошибка", f"Файл модели model_{name}.pkl не найден")
 
         # подключение кнопок интерфейса
         self.ui.btnLoad.clicked.connect(self.load_data)
