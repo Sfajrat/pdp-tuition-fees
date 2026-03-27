@@ -23,37 +23,31 @@ class ModelManager:
         return data["model"]
 
 
-    def train_default_model():
-        """
-        Обучает отдельную модель для каждой образовательной программы.
-        Требования:
-        - файл data.csv должен лежать рядом с main.py
-        - колонки: year, university, program, form, cost
-        """
-        if not os.path.exists("data.csv"):
-            raise FileNotFoundError("Файл data.csv не найден. Невозможно обучить модель.")
-
-        df = pd.read_csv("data.csv")
-
-        required = {"year", "university", "program", "form", "cost"}
-        if not required.issubset(df.columns):
-            raise ValueError(f"В data.csv должны быть колонки: {required}")
-
-        models = {}
-
-        # Обучаем отдельную модель для каждой программы
-        for program in df["program"].unique():
-            df_prog = df[df["program"] == program]
-
-            X = df_prog[["year"]]
-            y = df_prog["cost"]
-
+    def train_model(self, model_name, X, y, save_path=None):
+        # Обучает модель для каждой образовательной программы. В x содержится только : year, program_length, students_count, в будущем можно добавить форму обучения
+        if model_name == "linear":
             model = LinearRegression()
-            model.fit(X, y)
+        elif model_name == "random_forest":
+            model = RandomForestRegressor(n_estimators=100, random_state=42)
+        elif model_name == "gradient_boosting":
+            model = GradientBoostingRegressor(n_estimators=100, random_state=42)
+        else:
+            raise ValueError("Неизвестная модель")
 
-            models[program] = model
+        self.scaler = StandardScaler()
+        X_scaled = self.scaler.fit_transform(X)
 
-        return models
+        model.fit(X_scaled, y)
+
+        if save_path:
+            joblib.dump({
+                "model": model,
+                "scaler": self.scaler,
+                "feature_names": self.feature_names
+            }, save_path)
+
+        self.models[model_name] = {"model": model, "scaler": self.scaler}
+        return model
 
 
     def predict_price(models, year, program):
