@@ -64,7 +64,7 @@ class ComparativeAnalysis:
         return pd.DataFrame(result).sort_values('growth_percent', ascending=False)
 
     def correlation_analysis(self):
-        """Корреляционный анализ"""
+        #Корреляционный анализ
         numeric_df = self.df.select_dtypes(include=[np.number])
         corr_matrix = numeric_df.corr().round(3)
         price_corr = corr_matrix['price'].sort_values(ascending=False).round(3)
@@ -74,7 +74,7 @@ class ComparativeAnalysis:
         }
 
     def anova_analysis(self):
-        """ANOVA — проверка статистической значимости различий"""
+        #ANOVA — проверка статистической значимости различий
         results = []
 
         # ANOVA по вузам
