@@ -61,3 +61,6 @@ class ModelManager:
 
         prediction = self.models[model_name]["model"].predict(X_scaled)
         return float(prediction[0])
+
+    def get_available_models(self):
+        return list(self.models.keys())
