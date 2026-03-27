@@ -135,33 +135,49 @@ class App(QMainWindow):
 
     # создание аналитического отчёта
     def create_report(self):
-
         try:
-
             df = self.db.load_all()
-
             if df.empty:
-                QMessageBox.warning(self, "Ошибка", "Нет данных для формирования отчёта")
+                QMessageBox.warning(self, "Ошибка", "Нет данных для отчёта")
                 return
 
             report_text = generate_report(df)
 
-            path, _ = QFileDialog.getSaveFileName(
+            # Диалог сохранения TXT
+            path_txt, _ = QFileDialog.getSaveFileName(
                 self,
-                "Сохранить отчет",
+                "Сохранить аналитический отчёт",
                 "report.txt",
-                "Text Files (*.txt)"
+                "Text Files (*.txt);;All Files (*)"
             )
 
-            if not path:
+            if not path_txt:
                 return
 
-            export_report(report_text, path)
+            # Сохраняем TXT
+            export_report(report_text, path_txt)
 
-            QMessageBox.information(self, "Готово", "Отчет успешно сохранён")
+            # Автоматически сохраняем PDF с тем же именем
+            path_pdf = path_txt.replace(".txt", ".pdf") if path_txt.endswith(".txt") else path_txt + ".pdf"
+
+            try:
+                export_report_to_pdf(report_text, path_pdf)
+                QMessageBox.information(
+                    self,
+                    "Готово",
+                    f"Отчёт успешно сохранён!\n\n"
+                    f"TXT: {path_txt}\n"
+                    f"PDF: {path_pdf}"
+                )
+            except Exception as pdf_error:
+                QMessageBox.warning(
+                    self,
+                    "PDF не создан",
+                    f"TXT сохранён успешно.\n\nОшибка создания PDF:\n{str(pdf_error)}"
+                )
 
         except Exception as e:
-            QMessageBox.critical(self, "Ошибка отчета", str(e))
+            QMessageBox.critical(self, "Ошибка отчёта", str(e))
 
 
 if __name__ == "__main__":
