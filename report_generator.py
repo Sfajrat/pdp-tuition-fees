@@ -63,6 +63,10 @@ def generate_report(df):
         'first_year': 'Первый год',
         'last_year': 'Последний год'
     })
+    
+    # Сортируем по убыванию роста
+    growth_df = growth_df.sort_values('Темп роста (%)', ascending=False)
+    report.append(growth_df.to_string(index=False, float_format="{:,.2f}".format))
 
     # 4. Официальная статистика
     report.append("\n" + "=" * 88)
