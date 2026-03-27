@@ -50,13 +50,14 @@ class ModelManager:
         return model
 
 
-    def predict_price(models, year, program):
-        """
-        Возвращает прогноз стоимости для выбранной программы.
-        """
-        if program not in models:
-            raise ValueError(f"Нет обученной модели для программы: {program}")
+    def predict(self, model_name, year, length, students):
+        # Прогнозирование стоимости по 3 признакам
+        if model_name not in self.models:
+            raise ValueError(f"Модель {model_name} не загружена")
 
-        model = models[program]
-        X = np.array([[year]])
-        return float(model.predict(X)[0])
+        # Передаём ровно 3 признака
+        X = np.array([[year, length, students]])
+        X_scaled = self.models[model_name]["scaler"].transform(X)
+
+        prediction = self.models[model_name]["model"].predict(X_scaled)
+        return float(prediction[0])
