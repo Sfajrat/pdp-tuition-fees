@@ -13,7 +13,7 @@ class ModelManager:
     def load_model(self, model_name, path=None):
         # Загружает модель, если она существует. Если файла нет — обучает модель автоматически.
         if path is None:
-            path = f"{model_name}_model.pkl"
+            path = f"model_{model_name}.pkl"
         data = joblib.load(path)
         self.models[model_name] = data
         self.scaler = data["scaler"]
