@@ -106,34 +106,16 @@ class App(QMainWindow):
     # прогнозирование
     def make_prediction(self):
 
-        if self.model is None:
-            QMessageBox.warning(self, "Ошибка", "Модель не загружена")
-            return
-
-        if not self.ui.inputYear.text():
-            QMessageBox.warning(self, "Ошибка", "Введите год")
-            return
-
-        if not self.ui.inputLength.text():
-            QMessageBox.warning(self, "Ошибка", "Введите длительность программы")
-            return
-
-        if not self.ui.inputStudents.text():
-            QMessageBox.warning(self, "Ошибка", "Введите количество студентов")
-            return
-
+        model_name = self.ui.modelCombo.currentText()
         try:
-
             year = int(self.ui.inputYear.text())
             length = int(self.ui.inputLength.text())
             students = int(self.ui.inputStudents.text())
 
-            result = predict_price(self.model, year, length, students)
-
-            self.ui.labelResult.setText(f"Прогноз: {result:.2f} руб.")
-
+            result = self.model_manager.predict(model_name, year, length, students)
+            self.ui.labelResult.setText(f"Прогноз ({model_name}): {result:,.2f} руб.")
         except Exception as e:
-            QMessageBox.critical(self, "Ошибка прогнозирования", str(e))
+            QMessageBox.critical(self, "Ошибка прогноза", str(e))
 
     # построение графика
     def show_plot(self):
