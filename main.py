@@ -74,7 +74,7 @@ class App(QMainWindow):
             self.model_manager = ModelManager()
 
             for name in ["linear", "random_forest", "gradient_boosting"]:
-                self.model_manager.train_model(name, X, y, save_path=f"{name}_model.pkl")
+                self.model_manager.train_model(name, X, y, save_path=f"model_{name}.pkl")
 
             QMessageBox.information(self, "Успех", "Все три модели успешно обучены и сохранены!")
 
