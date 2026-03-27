@@ -7,7 +7,7 @@ from ml_module import ModelManager
 from visualization import plot_price_dynamics
 from database import Database
 from report_generator import generate_report
-from export_module import export_report
+from export_module import export_report, export_report_to_pdf
 from comparative_analysis import ComparativeAnalysis
 
 class App(QMainWindow):
