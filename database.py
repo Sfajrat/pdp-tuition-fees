@@ -17,6 +17,8 @@ class Database:
                 university TEXT
             )
         """)
+        # Для чистоты проверки дропаем таблицу
+        self.conn.execute("DROP TABLE tuition")
         self.conn.commit()
 
     def save_dataframe(self, df):

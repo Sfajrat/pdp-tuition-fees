@@ -31,7 +31,7 @@ def export_report_to_pdf(report_text: str, pdf_path: str = "report.pdf"):
 
     styles = getSampleStyleSheet()
     styles.add(ParagraphStyle(name='Russian', fontName='DejaVuSerif', fontSize=11, leading=14))
-    styles.add(ParagraphStyle(name='Title', fontName='DejaVuSerif', fontSize=16, alignment=1, spaceAfter=20))
+    styles.add(ParagraphStyle(name='MyTitle', fontName='DejaVuSerif', fontSize=16, leading=18, alignment=1, spaceAfter=20))
     styles.add(ParagraphStyle(name='Heading', fontName='DejaVuSerif', fontSize=13, spaceAfter=12))
 
     story = []
@@ -43,7 +43,7 @@ def export_report_to_pdf(report_text: str, pdf_path: str = "report.pdf"):
             story.append(Spacer(1, 0.3 * cm))
             continue
         if line.startswith("АНАЛИТИЧЕСКИЙ ОТЧЁТ") or "ОТЧЁТ" in line:
-            story.append(Paragraph(line, styles['Title']))
+            story.append(Paragraph(line, styles['MyTitle']))
         elif line.startswith(("1.", "2.", "3.", "4.")) or line.startswith("3."):
             story.append(Paragraph(line, styles['Heading']))
         else:

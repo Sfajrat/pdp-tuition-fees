@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem
 from ui_mainwindow import Ui_MainWindow
 from data_loader import load_file
 from preprocessing import prepare_data
@@ -76,9 +76,10 @@ class App(QMainWindow):
                 self.ui.dataTable.setItem(i, 0, QTableWidgetItem(str(row.get('year', ''))))
                 self.ui.dataTable.setItem(i, 1, QTableWidgetItem(str(row.get('program', ''))))
                 self.ui.dataTable.setItem(i, 2, QTableWidgetItem(str(row.get('program_length', ''))))
-                self.ui.dataTable.setItem(i, 3, QTableWidgetItem(str(row.get('students_count', ''))))
-                self.ui.dataTable.setItem(i, 4, QTableWidgetItem(f"{row.get('price', 0):,.0f}"))
-                self.ui.dataTable.setItem(i, 5, QTableWidgetItem(str(row.get('university', 'Не указан'))))
+                self.ui.dataTable.setItem(i, 3, QTableWidgetItem(str(row.get('form', ''))))
+                self.ui.dataTable.setItem(i, 4, QTableWidgetItem(str(row.get('students_count', ''))))
+                self.ui.dataTable.setItem(i, 5, QTableWidgetItem(f"{row.get('price', 0):,.0f}"))
+                self.ui.dataTable.setItem(i, 6, QTableWidgetItem(str(row.get('university', 'Не указан'))))
         except:
             pass
 

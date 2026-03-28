@@ -36,9 +36,9 @@ class Ui_MainWindow:
 
         # Таблица для отображения данных
         self.dataTable = QTableWidget()
-        self.dataTable.setColumnCount(6)
+        self.dataTable.setColumnCount(7)
         self.dataTable.setHorizontalHeaderLabels([
-            "Год", "Программа", "Длительность", "Студентов", "Стоимость (руб.)", "Вуз"
+            "Год", "Программа", "Длительность", "Форма обучения", "Студентов", "Стоимость (руб.)", "Вуз"
         ])
         self.dataTable.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.dataTable.setAlternatingRowColors(True)
